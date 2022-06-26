@@ -40,7 +40,7 @@
 </head>
 <body>
 <div class="topnav">
-    <a href="/idhit/appointments/register">Home</a>
+    <a href="/idhit/home">Home</a>
     <a class="active" href="/idhit/appointments/register">Appointments</a>
     <a href="/idhit/doctors/register">Doctors</a>
     <a href="/idhit/medicines">Medicines</a>
