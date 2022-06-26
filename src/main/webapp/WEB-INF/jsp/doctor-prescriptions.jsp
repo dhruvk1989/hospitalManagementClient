@@ -18,28 +18,20 @@
             background-color: #dddddd;
         }
     </style>
-    <title>Appointments</title>
 </head>
 <body>
 <table>
+    <h1>${doctor}</h1>
     <c:forEach items="${appointments}" var="appointments">
         <tr>
             <th>Doctor</th>
-            <th>ID</th>
             <th>Patient</th>
-            <th>Gender</th>
-            <th>Age</th>
-            <th>Date-Time</th>
-            <th>Status</th>
+            <th>Symptoms</th>
         </tr>
         <tr>
             <td><c:out value="${appointments.doctorName}" /></td>
-            <td><c:out value="${appointments.id}" /></td>
             <td><c:out value="${appointments.patientName}" /></td>
-            <td><c:out value="${appointments.gender}" /></td>
-            <td><c:out value="${appointments.age}" /></td>
-            <td><c:out value="${appointments.appointmentDateTime}" /></td>
-            <td><c:out value="${appointments.status}" /></td>
+            <td><c:out value="${appointments.symptoms}" /></td>
         </tr>
     </c:forEach>
 </table>
