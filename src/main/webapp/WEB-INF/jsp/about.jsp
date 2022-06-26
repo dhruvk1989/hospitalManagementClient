@@ -1,13 +1,7 @@
 <html>
 <head>
-    <title>Single doctor</title>
+    <title>About page IDHIT HMS</title>
     <style>
-        .center {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            width: 50%;
-        }
         body {
             margin: 0;
             font-family: Arial, Helvetica, sans-serif;
@@ -41,13 +35,12 @@
 <body>
 <div class="topnav">
     <a href="/idhit/appointments/register">Home</a>
-    <a class="active" href="/idhit/appointments/register">Appointments</a>
+    <a href="/idhit/appointments/register">Appointments</a>
     <a href="/idhit/doctors/register">Doctors</a>
     <a href="/idhit/medicines">Medicines</a>
-    <a href="/idhit/about">About</a>
+    <a class="active" href="/idhit/about">About</a>
 </div>
-<p><b>Doctor Name</b>        : ${doctor.name}</p>
-<p><b>Department</b>       : ${doctor.dept.deptName}</p>
-<p><b>Doctor Age</b>        : ${doctor.age}</p>
+<h2>About Us!</h2>
+<h3>Contact the developer at -> <a href="mailto:bhardwajshivani229@gmail.com">Gmail address of Shivani Bharadwaj</a></h3>
 </body>
 </html>

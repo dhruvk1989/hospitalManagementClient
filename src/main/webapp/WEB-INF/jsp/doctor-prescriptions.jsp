@@ -17,9 +17,45 @@
         tr:nth-child(even) {
             background-color: #dddddd;
         }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        .topnav a {
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .topnav a.active {
+            background-color: #04AA6D;
+            color: white;
+        }
     </style>
 </head>
 <body>
+<div class="topnav">
+    <a href="/idhit/home">Home</a>
+    <a href="/idhit/appointments/register">Appointments</a>
+    <a href="/idhit/doctors/register">Doctors</a>
+    <a href="/idhit/medicines">Medicines</a>
+    <a href="/idhit/about">About</a>
+</div>
 <table>
     <h1>${doctor}</h1>
     <c:forEach items="${appointments}" var="appointments">
