@@ -46,12 +46,12 @@ public class AppointmentController {
         return "create-appointment";
     }
 
-    @PostMapping("/save")
+    @PostMapping("/appointments/save")
     public String createAppointment(AppointmentPayload appointmentPayload,
                                     BindingResult bindingResult,
                                     RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            return "enroll";
+            return "create-appointment";
         }
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
