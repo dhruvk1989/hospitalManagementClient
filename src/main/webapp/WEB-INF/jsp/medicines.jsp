@@ -59,14 +59,14 @@
 </div>
 <h1>Medicines</h1>
 <table>
+    <tr>
+        <th>Name</th>
+        <th>Company Name</th>
+        <th>Disease</th>
+        <th>Price</th>
+        <th>Expiry Date</th>
+    </tr>
     <c:forEach items="${medicines}" var="medicines">
-        <tr>
-            <th>Name</th>
-            <th>Company Name</th>
-            <th>Disease</th>
-            <th>Price</th>
-            <th>Expiry Date</th>
-        </tr>
         <tr>
             <td><c:out value="${medicines.medicineName}" /></td>
             <td><c:out value="${medicines.companyName}" /></td>

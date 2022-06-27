@@ -75,7 +75,7 @@ public class PrescriptionController {
         }
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        Prescription prescription = restTemplate.postForEntity(baseUrl + "/doctors/" + docId + "/appointments/" + apptId + "prescriptions", prescriptionRequestPayload, Prescription.class, httpHeaders).getBody();
+        Prescription prescription = restTemplate.postForEntity(baseUrl + "/doctors/" + docId + "/appointments/" + apptId + "/prescriptions", prescriptionRequestPayload, Prescription.class, httpHeaders).getBody();
         return "redirect:/idhit/doctors/" + docId + "/appointments/" + apptId + "/prescriptions/" + prescription.getPrescriptionId();
     }
 

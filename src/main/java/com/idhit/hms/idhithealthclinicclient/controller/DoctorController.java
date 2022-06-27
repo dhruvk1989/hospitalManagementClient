@@ -1,6 +1,9 @@
 package com.idhit.hms.idhithealthclinicclient.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.idhit.hms.idhithealthclinicclient.entity.Appointment;
+import com.idhit.hms.idhithealthclinicclient.entity.Department;
 import com.idhit.hms.idhithealthclinicclient.entity.Doctor;
 import com.idhit.hms.idhithealthclinicclient.model.AppointmentPayload;
 import com.idhit.hms.idhithealthclinicclient.model.DoctorPayload;
@@ -18,6 +21,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/idhit")
@@ -61,6 +67,21 @@ public class DoctorController {
         Doctor doctor = restTemplate.getForEntity(baseUrl + "/doctors/" + id, Doctor.class).getBody();
         modelMap.addAttribute("doctor", doctor);
         return "single-doctor";
+    }
+
+    @GetMapping("/doctors")
+    public String getAllDoctors(ModelMap map){
+        List<Doctor> doctors = restTemplate.getForObject(baseUrl + "/doctors", List.class);
+        ObjectMapper mapper = new ObjectMapper();
+        doctors = mapper.convertValue(doctors, new TypeReference<List<Doctor>>() {
+        });
+        List<String> departments = new ArrayList<>();
+        for (Doctor doc : doctors) {
+            departments.add(doc.getDept().getDeptName());
+        }
+        map.addAttribute("doctors", doctors);
+        map.addAttribute("departments", departments);
+        return "all-doctors";
     }
 
 }
