@@ -23,6 +23,6 @@ public class Prescription {
     private Appointment appointment;
 
 
-    private List<String> medicines;
+    private String medicines;
     
 }
