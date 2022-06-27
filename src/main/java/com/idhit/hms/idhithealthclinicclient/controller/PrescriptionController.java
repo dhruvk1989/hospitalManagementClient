@@ -91,6 +91,7 @@ public class PrescriptionController {
         map.addAttribute("medicines", prescriptions.getMedicines());
         map.addAttribute("patientName", appointment.getPatientName());
         map.addAttribute("doctor", appointment.getDoctorName());
+        map.addAttribute("remarks", prescriptions.getDoctorRemarks());
         return "single-prescription";
     }
 

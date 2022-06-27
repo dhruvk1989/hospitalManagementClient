@@ -49,5 +49,6 @@
 <p><b>Patient Name</b>        : ${patientName}</p>
 <p><b>Medicines</b>     : ${medicines}</p>
 <p><b>Doctor Name</b>       : ${doctor}</p>
+<p><b>Doctor Remarks</b>       : ${remarks}</p>
 </body>
 </html>

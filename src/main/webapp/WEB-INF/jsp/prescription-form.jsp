@@ -78,9 +78,18 @@
 <form:form method="POST" modelAttribute="prescription" commandName="prescription" action="save">
     <div>
         <div>
-            <label for="name">Medicines</label>
+            <label for="medicines">Medicines</label>
             <div>
                 <form:input path="medicines" id="medicines" type="text"/>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <label for="doctorRemarks">Remarks</label>
+            <div>
+                <form:input path="doctorRemarks" id="doctorRemarks" type="text"/>
             </div>
         </div>
     </div>

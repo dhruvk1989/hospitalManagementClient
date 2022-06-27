@@ -24,5 +24,7 @@ public class Prescription {
 
 
     private String medicines;
+
+    private String doctorRemarks;
     
 }
