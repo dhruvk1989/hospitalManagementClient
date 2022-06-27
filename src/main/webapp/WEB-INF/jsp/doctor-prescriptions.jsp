@@ -58,16 +58,18 @@
 </div>
 <table>
     <h1>${doctor}</h1>
-    <c:forEach items="${appointments}" var="appointments">
+    <c:forEach items="${appointments}" var="appointments" varStatus="loop">
         <tr>
             <th>Doctor</th>
             <th>Patient</th>
             <th>Symptoms</th>
+            <th>Medicines</th>
         </tr>
         <tr>
             <td><c:out value="${appointments.doctorName}" /></td>
             <td><c:out value="${appointments.patientName}" /></td>
             <td><c:out value="${appointments.symptoms}" /></td>
+            <td><c:out value="${prescriptions[loop.index].medicines}"/></td>
         </tr>
     </c:forEach>
 </table>
