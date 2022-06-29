@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/idhit")
+@RequestMapping("/idhita")
 public class PrescriptionController {
 
     @Autowired
@@ -35,6 +35,7 @@ public class PrescriptionController {
     private String baseUrl;
 
     @GetMapping("/doctors/{docId}/appointments/{apptId}/prescriptions")
+    //get all prescriptions of a doctor
     public String getPrescriptionsOfADoctor(@PathVariable Long docId,
                                             @PathVariable Long apptId,
                                             ModelMap map){

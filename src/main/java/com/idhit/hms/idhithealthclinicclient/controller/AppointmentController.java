@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/idhit")
+@RequestMapping("/idhita")
 public class AppointmentController {
 
     @Autowired

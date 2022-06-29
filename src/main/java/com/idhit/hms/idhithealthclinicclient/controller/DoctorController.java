@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/idhit")
+@RequestMapping("/idhita")
 public class DoctorController {
 
     @Autowired

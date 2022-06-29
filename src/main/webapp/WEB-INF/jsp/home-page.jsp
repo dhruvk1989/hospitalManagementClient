@@ -46,6 +46,6 @@
         <a href="/idhit/about">About</a>
     </div>
     <h1 align="center">IDHIT HMS</h1>
-    <img class = "center" width="5%" height="40%" src="https://uc9ab6f0e3928d2510f1c4d8e124.dl.dropboxusercontent.com/cd/0/inline/Bn_OGvwByDfuHphGXokWR6WfODpGSOQStL1Q7WAOqd-HHzdElXr8nY8cIhrJjj43kyDHVYEerfGaM8aeLxVcMdqUdr3ZquidLve9k9MvkyH69DTVyApEWO8FRjO04vOuIcV7ng5RAQe7E8iATjYJwwtoEj0Iqi7c11bqucrrwpFJTA/file#" align="centre">
+    <img class = "center" width="5%" height="60%" src="https://www.dropbox.com/s/e1slgksaq7kk7ez/IDHIT.jpg?raw=1" align="centre">
 </body>
 </html>
