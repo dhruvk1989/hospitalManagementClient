@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -15,15 +16,11 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private DataSource dataSource;
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new CustomUserDetailsService();
-    }
+    UserDetailsService userDetailsService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -33,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
@@ -46,9 +43,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/idhita/**").authenticated()
-                .anyRequest().permitAll()
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/idhita/appointments/**").authenticated()
+                .antMatchers("/idhita/appointments/**").hasRole("ADMIN")
+                .antMatchers("/idhita/doctors/**").authenticated()
+                .antMatchers("/idhita/doctors/**").hasAnyRole("DOCTOR", "ADMIN")
+                .antMatchers("idhita/home").hasAnyRole("DOCTOR", "ADMIN", "PHARMA")
+                .antMatchers("/idhita/medicines").authenticated()
+                .antMatchers("/idhita/medicines").hasAnyRole("PHARMA", "ADMIN")
+                .antMatchers("/login", "/register", "/process_register").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .usernameParameter("email")
