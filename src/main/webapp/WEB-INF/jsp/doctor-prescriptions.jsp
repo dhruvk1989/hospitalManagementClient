@@ -50,11 +50,11 @@
 </head>
 <body>
 <div class="topnav">
-    <a href="/idhit/home">Home</a>
-    <a href="/idhit/appointments/register">Appointments</a>
-    <a href="/idhit/doctors/register">Doctors</a>
-    <a href="/idhit/medicines">Medicines</a>
-    <a href="/idhit/about">About</a>
+    <a href="/idhita/home">Home</a>
+    <a href="/idhita/appointments/register">Appointments</a>
+    <a href="/idhita/doctors/register">Doctors</a>
+    <a href="/idhita/medicines">Medicines</a>
+    <a href="/idhita/about">About</a>
 </div>
 <table>
     <h1>${doctor}</h1>

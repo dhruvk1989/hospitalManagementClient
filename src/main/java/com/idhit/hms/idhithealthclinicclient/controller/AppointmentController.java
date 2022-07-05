@@ -34,11 +34,6 @@ public class AppointmentController {
     @Value("${server.base.url}")
     private String baseUrl;
 
-    @GetMapping("/")
-    public String getSomeResponse(){
-        return "hello";
-    }
-
     @GetMapping("/appointments/register")
     public String createAppointmentForm(ModelMap modelMap){
         AppointmentPayload appointmentPayload = new AppointmentPayload();
