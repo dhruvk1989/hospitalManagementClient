@@ -3,6 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+src/main/java/com/idhit/hms/idhithealthclinicclient/.DS_Store
 
 src/.DS_Store
 src/main/.DS_Store
