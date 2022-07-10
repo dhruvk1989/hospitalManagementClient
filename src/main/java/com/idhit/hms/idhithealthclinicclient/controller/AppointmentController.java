@@ -56,7 +56,7 @@ public class AppointmentController {
         if (result.getDoctorName().equals("None")) {
             return "doctor-not-found";
         } else {
-            return "redirect:/idhit/appointments/" + result.getId();
+            return "redirect:/idhita/appointments/" + result.getId();
         }
     }
 
