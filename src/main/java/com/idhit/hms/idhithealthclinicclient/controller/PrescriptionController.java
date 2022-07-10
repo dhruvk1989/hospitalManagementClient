@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/idhit")
+@RequestMapping("/idhita")
 public class PrescriptionController {
 
     @Autowired
@@ -76,7 +76,7 @@ public class PrescriptionController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         Prescription prescription = restTemplate.postForEntity(baseUrl + "/doctors/" + docId + "/appointments/" + apptId + "/prescriptions", prescriptionRequestPayload, Prescription.class, httpHeaders).getBody();
-        return "redirect:/idhit/doctors/" + docId + "/appointments/" + apptId + "/prescriptions/" + prescription.getPrescriptionId();
+        return "redirect:/idhita/doctors/" + docId + "/appointments/" + apptId + "/prescriptions/" + prescription.getPrescriptionId();
     }
 
     @GetMapping("/doctors/{docId}/appointments/{apptId}/prescriptions/{presId}")

@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/idhit")
+@RequestMapping("/idhita")
 public class DoctorController {
 
     @Autowired
@@ -54,7 +54,7 @@ public class DoctorController {
         try {
             ResponseEntity<Doctor> response = restTemplate.postForEntity(baseUrl + "/doctors", doctorPayload, Doctor.class, httpHeaders);
             Doctor result = response.getBody();
-            return "redirect:/idhit/doctors/" + result.getDoctorId();
+            return "redirect:/idhita/doctors/" + result.getDoctorId();
         }catch (Exception e){
             System.out.println(e.getMessage());
             return "dept-not-found";

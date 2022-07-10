@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Controller
-@RequestMapping("idhit")
+@RequestMapping("idhita")
 public class MedicineController {
 
     @Autowired
