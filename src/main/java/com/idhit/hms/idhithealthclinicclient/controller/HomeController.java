@@ -18,4 +18,9 @@ public class HomeController {
         return "about";
     }
 
+    @GetMapping("/recep/home")
+    public String recepDashboard(){
+        return "recep-home";
+    }
+
 }

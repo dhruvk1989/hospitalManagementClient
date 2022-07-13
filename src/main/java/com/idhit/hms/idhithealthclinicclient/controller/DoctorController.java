@@ -7,6 +7,7 @@ import com.idhit.hms.idhithealthclinicclient.entity.Department;
 import com.idhit.hms.idhithealthclinicclient.entity.Doctor;
 import com.idhit.hms.idhithealthclinicclient.model.AppointmentPayload;
 import com.idhit.hms.idhithealthclinicclient.model.DoctorPayload;
+import com.idhit.hms.idhithealthclinicclient.model.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -42,6 +43,13 @@ public class DoctorController {
         return "create-doctor";
     }
 
+    @GetMapping("/doctors/{id}/home")
+    public String doctorDashboard(@PathVariable Long id, ModelMap map){
+        Doctor doctor = restTemplate.getForEntity(baseUrl + "/doctors/" + id, Doctor.class).getBody();
+        map.addAttribute("doctorName", doctor.getName());
+        return "doctor-home";
+    }
+
     @PostMapping("/doctors/save")
     public String createDoctor(DoctorPayload doctorPayload,
                                     BindingResult bindingResult,
@@ -66,6 +74,7 @@ public class DoctorController {
                                ModelMap modelMap){
         Doctor doctor = restTemplate.getForEntity(baseUrl + "/doctors/" + id, Doctor.class).getBody();
         modelMap.addAttribute("doctor", doctor);
+        modelMap.addAttribute("link", "/idhita/doctors/" + id + "/schedule");
         return "single-doctor";
     }
 
@@ -76,12 +85,28 @@ public class DoctorController {
         doctors = mapper.convertValue(doctors, new TypeReference<List<Doctor>>() {
         });
         List<String> departments = new ArrayList<>();
+        List<String> links = new ArrayList<>();
         for (Doctor doc : doctors) {
             departments.add(doc.getDept().getDeptName());
+            links.add("/idhita/doctors/" + doc.getDoctorId());
         }
         map.addAttribute("doctors", doctors);
         map.addAttribute("departments", departments);
+        map.addAttribute("links", links);
         return "all-doctors";
+    }
+
+    @GetMapping("/doctors/{id}/schedule")
+    public String getDoctorSchedule(@PathVariable Long id, ModelMap map){
+
+        List<Schedule> schedules = restTemplate.getForObject(baseUrl + "/doctors/" + id + "/schedule", List.class);
+        ObjectMapper mapper = new ObjectMapper();
+        schedules = mapper.convertValue(schedules, new TypeReference<List<Schedule>>() {
+        });
+        map.addAttribute("schedule", schedules);
+        map.addAttribute("doctorName", schedules.get(0).getDocName());
+        return "doctor-schedule";
+
     }
 
 }

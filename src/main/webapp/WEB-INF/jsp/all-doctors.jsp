@@ -68,7 +68,7 @@
 
     <c:forEach items="${doctors}" var="doctors" varStatus="loop">
         <tr>
-            <td><c:out value="${doctors.name}" /></td>
+            <td><a href="${links[loop.index]}"><c:out value="${doctors.name}" /></a></td>
             <td><c:out value="${doctors.age}" /></td>
             <td><c:out value="${departments[loop.index]}" /></td>
         </tr>

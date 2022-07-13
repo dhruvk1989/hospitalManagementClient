@@ -53,26 +53,24 @@
 <div class="topnav">
     <a href="/idhita/home">Home</a>
     <a href="/idhita/appointments/register">Appointments</a>
-    <a href="/idhita/doctors/register">Doctors</a>
-    <a class = "active" href="/idhita/medicines">Medicines</a>
+    <a class = "active" href="/idhita/doctors/register">Doctors</a>
+    <a href="/idhita/medicines">Medicines</a>
     <a href="/idhita/about">About</a>
 </div>
-<h1>Medicines</h1>
+<h1>${doctorName}</h1>
 <table>
     <tr>
-        <th>Name</th>
-        <th>Company Name</th>
-        <th>Disease</th>
-        <th>Price</th>
-        <th>Expiry Date</th>
+        <th>Appointment Id</th>
+        <th>Patient Name</th>
+        <th>Timing</th>
+        <th>Date</th>
     </tr>
-    <c:forEach items="${medicines}" var="medicines">
+    <c:forEach items="${schedule}" var="schedule">
         <tr>
-            <td><c:out value="${medicines.medicineName}" /></td>
-            <td><c:out value="${medicines.companyName}" /></td>
-            <td><c:out value="${medicines.disease}" /></td>
-            <td><c:out value="${medicines.price}" /></td>
-            <td><c:out value="${medicines.expiryDate}" /></td>
+            <td><c:out value="${schedule.apptId}" /></td>
+            <td><c:out value="${schedule.patientName}" /></td>
+            <td cssClass="form-control"><c:out value="${schedule.docTime}" /></td>
+            <td cssClass="form-control"><c:out value="${schedule.apptDate}" /></td>
         </tr>
     </c:forEach>
 </table>

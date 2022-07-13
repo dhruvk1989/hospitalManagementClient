@@ -49,5 +49,6 @@
 <p><b>Doctor Name</b>        : ${doctor.name}</p>
 <p><b>Department</b>       : ${doctor.dept.deptName}</p>
 <p><b>Doctor Age</b>        : ${doctor.age}</p>
+<p><a href="${link}"><b>Appointments/Schedule</b></a></p>
 </body>
 </html>
