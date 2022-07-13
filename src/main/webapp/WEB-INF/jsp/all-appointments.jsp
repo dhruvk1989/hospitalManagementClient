@@ -79,6 +79,7 @@
             <td><c:out value="${appointments.age}" /></td>
             <td><c:out value="${appointments.appointmentDateTime}" /></td>
             <td><c:out value="${appointments.status}" /></td>
+
         </tr>
     </c:forEach>
 </table>

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -33,11 +34,6 @@ public class AppointmentController {
 
     @Value("${server.base.url}")
     private String baseUrl;
-
-    @GetMapping("/")
-    public String getSomeResponse(){
-        return "hello";
-    }
 
     @GetMapping("/appointments/register")
     public String createAppointmentForm(ModelMap modelMap){
