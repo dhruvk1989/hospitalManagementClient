@@ -1,5 +1,6 @@
 HELP.md
 target/
+healthclinic.sql
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
