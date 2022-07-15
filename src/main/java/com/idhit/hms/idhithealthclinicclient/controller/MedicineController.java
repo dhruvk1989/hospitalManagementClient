@@ -32,4 +32,11 @@ public class MedicineController {
         return "medicines";
     }
 
+    @GetMapping("/medicines/register")
+    public String createMedicine(ModelMap map){
+        Medicine medicine = new Medicine();
+        map.addAttribute("medicine", medicine);
+        return "create-medicine";
+    }
+
 }

@@ -75,7 +75,7 @@
 </div>
 
 <h1>Create a doctor record</h1>
-<form:form method="POST" modelAttribute="doctor" commandName="doctor" action="/idhita/doctors/save">
+<form:form method="POST" modelAttribute="medicine" commandName="medicine" action="/idhita/doctors/save">
     <div>
         <div>
             <label for="name">Doctor's Name</label>

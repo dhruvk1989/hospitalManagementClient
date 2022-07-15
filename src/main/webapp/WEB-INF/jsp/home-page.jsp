@@ -45,7 +45,7 @@
         <a href="/idhita/medicines">Medicines</a>
         <a href="/idhita/about">About</a>
     </div>
-    <h1 align="center">IDHIT HMS</h1>
-    <img class = "center" width="5%" height="60%" src="https://www.dropbox.com/s/e1slgksaq7kk7ez/IDHIT.jpg?raw=1" align="centre">
+    <h1 align="center">IDHITA HMS</h1>
+    <img class = "center" width="5%" height="80%" src="https://i.ibb.co/bs7DW9D/IDHIT.png" align="centre">
 </body>
 </html>

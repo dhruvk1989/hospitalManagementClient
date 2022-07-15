@@ -30,4 +30,6 @@ public class Doctor {
     @JsonIgnore
     private List<Appointment> appointments;
 
+    private String userName;
+
 }

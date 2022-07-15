@@ -3,17 +3,18 @@ package com.idhit.hms.idhithealthclinicclient.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.idhit.hms.idhithealthclinicclient.entity.Appointment;
-import com.idhit.hms.idhithealthclinicclient.entity.Department;
 import com.idhit.hms.idhithealthclinicclient.entity.Doctor;
-import com.idhit.hms.idhithealthclinicclient.model.AppointmentPayload;
 import com.idhit.hms.idhithealthclinicclient.model.DoctorPayload;
 import com.idhit.hms.idhithealthclinicclient.model.Schedule;
+import com.idhit.hms.idhithealthclinicclient.security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/idhita")
@@ -33,6 +35,9 @@ public class DoctorController {
 
     @Autowired
     RestTemplate restTemplate;
+
+    //@Autowired
+    //DoctorRepo repo;
 
     @Value("${server.base.url}")
     private String baseUrl;
@@ -73,10 +78,42 @@ public class DoctorController {
     @GetMapping("/doctors/{id}")
     public String getOneDoctor(@PathVariable Long id,
                                ModelMap modelMap){
+        UserDetails ob = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         Doctor doctor = restTemplate.getForEntity(baseUrl + "/doctors/" + id, Doctor.class).getBody();
-        modelMap.addAttribute("doctor", doctor);
-        modelMap.addAttribute("link", "/idhita/doctors/" + id + "/schedule");
-        return "single-doctor";
+
+        if(ob.getUsername().equals(doctor.getUserName())){
+            System.out.println("yikes");
+            modelMap.addAttribute("doctor", doctor);
+            modelMap.addAttribute("link", "/idhita/doctors/" + id + "/schedule");
+            return "single-doctor";
+        }else {
+            System.out.println(ob.getUsername());
+            System.out.println(doctor.getUserName());
+            return "forbidden";
+        }
+    }
+
+    @GetMapping("/doctors/{id}/appointments/{apptId}")
+    public String getSingleAppointment(@PathVariable Long id,
+                                       @PathVariable Long apptId,
+                                       ModelMap modelMap){
+        UserDetails ob = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Doctor doctor = restTemplate.getForEntity(baseUrl + "/doctors/" + id, Doctor.class).getBody();
+
+        if(ob.getUsername().equals(doctor.getUserName())){
+
+        }else {
+            System.out.println(ob.getUsername());
+            System.out.println(doctor.getUserName());
+            return "forbidden";
+        }
+
+        Appointment appointment = restTemplate.getForEntity(baseUrl+"/appointments/"+apptId,Appointment.class).getBody();
+        modelMap.addAttribute("appointment", appointment);
+        System.out.println(appointment.toString());
+        return "single-appointment";
     }
 
     @GetMapping("/doctors")

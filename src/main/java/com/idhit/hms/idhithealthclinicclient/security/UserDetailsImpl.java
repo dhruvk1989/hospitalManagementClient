@@ -23,6 +23,10 @@ public class UserDetailsImpl implements UserDetails {
         return user.getPassword();
     }
 
+    public Long userId(){
+        return user.getId();
+    }
+
     @Override
     public String getUsername() {
         return user.getEmail();
