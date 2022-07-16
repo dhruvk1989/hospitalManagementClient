@@ -24,12 +24,14 @@ public class HMSUtil {
 
         Doctor doctor = restTemplate.getForEntity(baseUrl + "/doctors/" + id, Doctor.class).getBody();
 
-        if(ob.getUsername().equals(doctor.getUserName())
-                ||
-                ob.getAuthorities().stream().collect(Collectors.toList()).get(0).getAuthority().equals("ROLE_ADMIN")){
+        if(ob.getAuthorities().stream().collect(Collectors.toList()).get(0).getAuthority().equals("ROLE_DOCTOR")) {
+            if(ob.getUsername().equals(doctor.getUserName())){
+                return true;
+            }else {
+                return false;
+            }
+        }else{
             return true;
-        }else {
-            return false;
         }
 
     }
