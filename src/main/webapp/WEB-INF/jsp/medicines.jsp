@@ -66,13 +66,13 @@
         <th>Price</th>
         <th>Expiry Date</th>
     </tr>
-    <c:forEach items="${medicines}" var="medicines">
+    <c:forEach items="${medicines}" var="medicines" varStatus="loop">
         <tr>
             <td><c:out value="${medicines.medicineName}" /></td>
             <td><c:out value="${medicines.companyName}" /></td>
             <td><c:out value="${medicines.disease}" /></td>
             <td><c:out value="${medicines.price}" /></td>
-            <td><c:out value="${medicines.expiryDate}" /></td>
+            <td><c:out value="${dates[loop.index]}" /></td>
         </tr>
     </c:forEach>
 </table>

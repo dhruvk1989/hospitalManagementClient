@@ -65,9 +65,9 @@
         <th>Timing</th>
         <th>Date</th>
     </tr>
-    <c:forEach items="${schedule}" var="schedule">
+    <c:forEach items="${schedule}" var="schedule" varStatus="loop">
         <tr>
-            <td><c:out value="${schedule.apptId}" /></td>
+            <td><a href="${links[loop.index]}"><c:out value="${schedule.apptId}" /></a></td>
             <td><c:out value="${schedule.patientName}" /></td>
             <td cssClass="form-control"><c:out value="${schedule.docTime}" /></td>
             <td cssClass="form-control"><c:out value="${schedule.apptDate}" /></td>

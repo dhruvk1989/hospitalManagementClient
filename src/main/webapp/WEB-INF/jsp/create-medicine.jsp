@@ -75,33 +75,52 @@
 </div>
 
 <h1>Create a doctor record</h1>
-<form:form method="POST" modelAttribute="medicine" commandName="medicine" action="/idhita/doctors/save">
+<form:form method="POST" modelAttribute="medicine" commandName="medicine" action="/idhita/medicines/save">
     <div>
         <div>
-            <label for="name">Doctor's Name</label>
+            <label for="medicineName">Medicine's Name</label>
             <div>
-                <form:input path="name" id="name" type="text"/>
+                <form:input path="medicineName" id="medicineName" type="text"/>
             </div>
         </div>
     </div>
 
     <div>
         <div>
-            <label for="age">Age</label>
+            <label for="companyName">Company Name</label>
             <div>
-                <form:input path="age" id="age" type="text"/>
+                <form:input path="companyName" id="companyName" type="text"/>
             </div>
         </div>
     </div>
 
     <div>
         <div>
-            <label for="dept">Department</label>
+            <label for="disease">Disease</label>
             <div>
-                <form:input path="dept" id="dept" type="text"/>
+                <form:input path="disease" id="disease" type="text"/>
             </div>
         </div>
     </div>
+
+    <div>
+        <div>
+            <label for="price">Price</label>
+            <div>
+                <form:input path="price" id="price" type="text"/>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <label for="expiryDate">Expiry date</label>
+            <div>
+                <form:input path="expiryDate" id="expiryDate" type="text"/>
+            </div>
+        </div>
+    </div>
+
     <div>
         <div>
             <input type="submit" value="Register">

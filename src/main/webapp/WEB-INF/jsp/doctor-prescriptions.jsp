@@ -49,25 +49,16 @@
     </style>
 </head>
 <body>
-<div class="topnav">
-    <a href="/idhita/home">Home</a>
-    <a href="/idhita/appointments/register">Appointments</a>
-    <a href="/idhita/doctors/register">Doctors</a>
-    <a href="/idhita/medicines">Medicines</a>
-    <a href="/idhita/about">About</a>
-</div>
 <table>
     <h1>${doctor}</h1>
+    <tr>
+        <th>Patient</th>
+        <th>Symptoms</th>
+        <th>Medicines</th>
+    </tr>
     <c:forEach items="${appointments}" var="appointments" varStatus="loop">
         <tr>
-            <th>Doctor</th>
-            <th>Patient</th>
-            <th>Symptoms</th>
-            <th>Medicines</th>
-        </tr>
-        <tr>
-            <td><c:out value="${appointments.doctorName}" /></td>
-            <td><c:out value="${appointments.patientName}" /></td>
+            <td><a href = ${links[loop.index]}><c:out value="${appointments.patientName}" /></a></td>
             <td><c:out value="${appointments.symptoms}" /></td>
             <td><c:out value="${prescriptions[loop.index].medicines}"/></td>
         </tr>

@@ -96,4 +96,34 @@ public class PrescriptionController {
         return "single-prescription";
     }
 
+    @GetMapping("/doctors/{docId}/prescriptions")
+    public String getAllPrescriptions(@PathVariable Long docId, ModelMap map){
+        List<Prescription> prescriptions = restTemplate.getForObject(baseUrl + "/doctors/" + docId + "/prescriptions",
+                List.class);
+        ObjectMapper mapper = new ObjectMapper();
+        prescriptions = mapper.convertValue(prescriptions, new TypeReference<List<Prescription>>() {});
+        List<Appointment> appointments = new ArrayList<>();
+        for (Prescription p : prescriptions) {
+            appointments.add(p.getAppointment());
+        }
+        if(prescriptions.size() == 0){
+            return "no-prescriptions";
+        }
+
+        ArrayList<String> links = new ArrayList<>();
+        for (Appointment a : appointments) {
+            if(a != null){
+                links.add("/idhita/doctors/" + docId + "/appointments/" + a.getId() + "/prescriptions/" + a.getPrescriptionId());
+            }else{
+                links.add("");
+            }
+        }
+
+        map.addAttribute("links", links);
+        map.addAttribute("prescriptions", prescriptions);
+        map.addAttribute("appointments", appointments);
+        map.addAttribute("doctor", appointments.get(0).getDoctorName());
+        return "doctor-prescriptions";
+    }
+
 }

@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,6 +66,8 @@ public class AppointmentController {
     public String getSingleAppointment(@PathVariable Long id,
                                        ModelMap modelMap){
         Appointment appointment = restTemplate.getForEntity(baseUrl+"/appointments/"+id,Appointment.class).getBody();
+        String date = new SimpleDateFormat("dd-MM-yyyy").format(appointment.getAppointmentDateTime());
+        modelMap.addAttribute("date", date);
         modelMap.addAttribute("appointment", appointment);
         System.out.println(appointment.toString());
         return "single-appointment";
@@ -81,7 +85,22 @@ public class AppointmentController {
                 filter((a) -> !(a.getDoctorName()== null)). //filtered the null doctors
                 filter((a) -> !(a.getDoctorName().          //filtered the doctor that have the name "None"
                         equals("None"))).collect(Collectors.toList()); //collected the final appointments that have doctors listed in it
+
+        ArrayList<String> dates = new ArrayList<>();
+        ArrayList<String> links = new ArrayList<>();
+
+        for (Appointment a : appointments) {
+            if(a.getAppointmentDateTime() != null) {
+                dates.add(new SimpleDateFormat("dd-MM-yyyy").format(a.getAppointmentDateTime()));
+            }else{
+                dates.add("");
+            }
+            links.add("/idhita/appointments/" + a.getId());
+        }
+
         modelMap.addAttribute("appointments", appointments);
+        modelMap.addAttribute("dates", dates);
+        modelMap.addAttribute("links", links);
         return "all-appointments";
     }
 

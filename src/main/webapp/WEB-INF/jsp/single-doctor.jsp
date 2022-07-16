@@ -39,13 +39,6 @@
     </style>
 </head>
 <body>
-<div class="topnav">
-    <a href="/idhita/home">Home</a>
-    <a class="active" href="/idhita/appointments/register">Appointments</a>
-    <a href="/idhita/doctors/register">Doctors</a>
-    <a href="/idhita/medicines">Medicines</a>
-    <a href="/idhita/about">About</a>
-</div>
 <p><b>Doctor Name</b>        : ${doctor.name}</p>
 <p><b>Department</b>       : ${doctor.dept.deptName}</p>
 <p><b>Doctor Age</b>        : ${doctor.age}</p>

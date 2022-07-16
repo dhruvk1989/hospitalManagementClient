@@ -1,9 +1,16 @@
 package com.idhit.hms.idhithealthclinicclient.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
 
 public class Appointment {
 
@@ -27,14 +34,27 @@ public class Appointment {
 
         //private List<String> symptomps;
 
-        @DateTimeFormat(pattern = "yyyy-MM-dd HH:MM:SS")
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
         private Date appointmentDateTime;
 
         private String status;
 
+        @DateTimeFormat(pattern="HH:mm:ss")
+        private String time;
+
         private String symptoms;
 
-        public String getSymptoms(){
+        private Long prescriptionId;
+
+        public Long getPrescriptionId() {
+            return prescriptionId;
+        }
+
+        public void setPrescriptionId(Long prescriptionId) {
+            this.prescriptionId = prescriptionId;
+        }
+
+    public String getSymptoms(){
             return symptoms;
         }
 
@@ -42,7 +62,15 @@ public class Appointment {
             this.symptoms = symptoms;
         }
 
-        public Long getId() {
+        public String getTime() {
+            return time;
+        }
+
+        public void setTime(String time) {
+            this.time = time;
+        }
+
+    public Long getId() {
             return id;
         }
 

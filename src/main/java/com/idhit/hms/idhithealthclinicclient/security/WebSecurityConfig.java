@@ -64,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .usernameParameter("email")
-                .defaultSuccessUrl("/idhita/home")
+                .defaultSuccessUrl("/idhita/redirect")
                 .permitAll()
                 .and()
                 .logout().logoutSuccessUrl("/idhita/").permitAll();

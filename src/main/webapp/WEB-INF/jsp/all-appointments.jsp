@@ -61,25 +61,25 @@
     </div>
 
     <tr>
-        <th>Doctor</th>
         <th>ID</th>
+        <th>Doctor</th>
         <th>Patient</th>
         <th>Gender</th>
         <th>Age</th>
-        <th>Date-Time</th>
+        <th>Date</th>
+        <th>Time</th>
         <th>Status</th>
     </tr>
 
-    <c:forEach items="${appointments}" var="appointments">
-        <tr>
-            <td><c:out value="${appointments.doctorName}" /></td>
-            <td><c:out value="${appointments.id}" /></td>
-            <td><c:out value="${appointments.patientName}" /></td>
-            <td><c:out value="${appointments.gender}" /></td>
-            <td><c:out value="${appointments.age}" /></td>
-            <td><c:out value="${appointments.appointmentDateTime}" /></td>
-            <td><c:out value="${appointments.status}" /></td>
-
+    <c:forEach items="${appointments}" var="appointments" varStatus="loop">
+        <td><a href="${links[loop.index]}"> <c:out value="${appointments.id}" /></a></td>
+        <td><c:out value="${appointments.doctorName}" /></td>
+        <td><c:out value="${appointments.patientName}" /></td>
+        <td><c:out value="${appointments.gender}" /></td>
+        <td><c:out value="${appointments.age}" /></td>
+        <td><c:out value="${dates[loop.index]}" /></td>
+        <td><c:out value="${appointments.time}" /></td>
+        <td><c:out value="${appointments.status}" /></td>
         </tr>
     </c:forEach>
 </table>
