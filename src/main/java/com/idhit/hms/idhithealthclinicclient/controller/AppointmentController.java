@@ -5,12 +5,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.idhit.hms.idhithealthclinicclient.entity.Appointment;
 import com.idhit.hms.idhithealthclinicclient.model.AppointmentPayload;
 import com.idhit.hms.idhithealthclinicclient.model.AppointmentResponsePayload;
+import com.idhit.hms.idhithealthclinicclient.util.HMSUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -37,8 +40,15 @@ public class AppointmentController {
     @Value("${server.base.url}")
     private String baseUrl;
 
+    @Autowired
+    HMSUtil hmsUtil;
+
     @GetMapping("/appointments/register")
     public String createAppointmentForm(ModelMap modelMap){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        modelMap.addAttribute("home", hmsUtil.checkRoleBasedHome(userDetails, null));
+
         AppointmentPayload appointmentPayload = new AppointmentPayload();
         modelMap.addAttribute("appointment", appointmentPayload);
         return "create-appointment";
@@ -47,7 +57,12 @@ public class AppointmentController {
     @PostMapping("/appointments/save")
     public String createAppointment(AppointmentPayload appointmentPayload,
                                     BindingResult bindingResult,
-                                    RedirectAttributes redirectAttributes) {
+                                    RedirectAttributes redirectAttributes, ModelMap modelMap) {
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        modelMap.addAttribute("home", hmsUtil.checkRoleBasedHome(userDetails, null));
+
         if (bindingResult.hasErrors()) {
             return "create-appointment";
         }
@@ -65,6 +80,11 @@ public class AppointmentController {
     @GetMapping("appointments/{id}")
     public String getSingleAppointment(@PathVariable Long id,
                                        ModelMap modelMap){
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        modelMap.addAttribute("home", hmsUtil.checkRoleBasedHome(userDetails, null));
+
         Appointment appointment = restTemplate.getForEntity(baseUrl+"/appointments/"+id,Appointment.class).getBody();
         String date = new SimpleDateFormat("dd-MM-yyyy").format(appointment.getAppointmentDateTime());
         modelMap.addAttribute("date", date);
@@ -75,6 +95,11 @@ public class AppointmentController {
 
     @GetMapping("/appointments")
     public String getAllAppointments(ModelMap modelMap){
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        modelMap.addAttribute("home", hmsUtil.checkRoleBasedHome(userDetails, null));
+
         List<Appointment> appointments = restTemplate.getForEntity(baseUrl+"/appointments",ArrayList.class).getBody();
         ObjectMapper mapper = new ObjectMapper();
         appointments = mapper.convertValue(appointments, new TypeReference<List<Appointment>>() {});//to explicitly

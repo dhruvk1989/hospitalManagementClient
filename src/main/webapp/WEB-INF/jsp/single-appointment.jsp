@@ -39,6 +39,10 @@
     </style>
 </head>
 <body>
+<div class="topnav">
+    <a href="${home}">Home</a>
+    <a href="/logout">Logout</a>
+</div>
 <p><b>Appointment ID</b>     : ${appointment.id}</p>
 <p><b>Doctor Name</b>        : ${appointment.doctorName}</p>
 <p><b>Patient Name</b>       : ${appointment.patientName}</p>

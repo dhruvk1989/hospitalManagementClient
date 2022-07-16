@@ -53,6 +53,16 @@ public class LoginController {
         return "register_success";
     }
 
+    @GetMapping("/idhita/recep_home")
+    public String recepHome(){
+        return "recep-home";
+    }
+
+    @GetMapping("/idhita/pharma_home")
+    public String pharmaHome(){
+        return "pharma-home";
+    }
+
     @GetMapping("/idhita/redirect")
     public String redirect(ModelMap modelMap){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -69,7 +79,7 @@ public class LoginController {
             String username = userDetails.getUsername();
             try {
                 Doctor doctor = restTemplate.getForEntity(baseUrl + "/doctors/emailSearch?email=" + username, Doctor.class).getBody();
-                return "redirect:/idhita/doctors/" + doctor.getDoctorId();
+                return "redirect:/idhita/doctors/" + doctor.getDoctorId() + "/home";
             }catch(Exception e){
                 modelMap.put("error", e.getMessage());
                 return "error-page";

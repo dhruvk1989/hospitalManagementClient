@@ -34,4 +34,20 @@ public class HMSUtil {
 
     }
 
+    public String checkRoleBasedHome(UserDetails ob, Long docId){
+        String role = ob.getAuthorities().stream().collect(Collectors.toList()).get(0).getAuthority();
+
+        if(role.equals("ROLE_ADMIN")){
+            return "/idhita/home";
+        }else if(role.equals("ROLE_DOCTOR")){
+            return "/idhita/" + docId + "/home";
+        }else if(role.equals("ROLE_RECEP")){
+            return "/idhita/recep_home";
+        }else if(role.equals("ROLE_PHARMA")) {
+            return "/idhita/pharma_home";
+        }
+
+        return "/idhita/home";
+    }
+
 }

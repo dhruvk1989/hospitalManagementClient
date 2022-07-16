@@ -10,10 +10,12 @@ import com.idhit.hms.idhithealthclinicclient.security.UserDetailsImpl;
 import com.idhit.hms.idhithealthclinicclient.util.HMSUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -47,8 +49,13 @@ public class DoctorController {
     @Value("${server.base.url}")
     private String baseUrl;
 
+    @Autowired
+    private HMSUtil hmsUtil;
+
     @GetMapping("/doctors/register")
     public String createDoctorForm(ModelMap modelMap){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        modelMap.addAttribute("home", hmsUtil.checkRoleBasedHome(userDetails, null));
         DoctorPayload doctorPayload = new DoctorPayload();
         modelMap.addAttribute("doctor", doctorPayload);
         return "create-doctor";
@@ -56,8 +63,11 @@ public class DoctorController {
 
     @GetMapping("/doctors/{id}/home")
     public String doctorDashboard(@PathVariable Long id, ModelMap map){
-        UserDetails ob = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(util.checkUserId(id, ob)){
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        map.addAttribute("home", hmsUtil.checkRoleBasedHome(userDetails, id));
+        if(util.checkUserId(id, userDetails)){
 
         }else{
             return "forbidden";
@@ -90,6 +100,10 @@ public class DoctorController {
     public String getOneDoctor(@PathVariable Long id,
                                ModelMap modelMap){
 
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        modelMap.addAttribute("home", hmsUtil.checkRoleBasedHome(userDetails, id));
+
         Doctor doctor = restTemplate.getForEntity(baseUrl + "/doctors/" + id, Doctor.class).getBody();
         UserDetails ob = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(util.checkUserId(id, ob)){
@@ -106,9 +120,11 @@ public class DoctorController {
                                        @PathVariable Long apptId,
                                        ModelMap modelMap){
 
-        UserDetails ob = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if(util.checkUserId(id, ob)){
+        modelMap.addAttribute("home", hmsUtil.checkRoleBasedHome(userDetails, id));
+
+        if(util.checkUserId(id, userDetails)){
 
         }else {
 
@@ -138,6 +154,11 @@ public class DoctorController {
 
     @GetMapping("/doctors")
     public String getAllDoctors(ModelMap map){
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        map.addAttribute("home", hmsUtil.checkRoleBasedHome(userDetails, null));
+
         List<Doctor> doctors = restTemplate.getForObject(baseUrl + "/doctors", List.class);
         ObjectMapper mapper = new ObjectMapper();
         doctors = mapper.convertValue(doctors, new TypeReference<List<Doctor>>() {
@@ -157,9 +178,11 @@ public class DoctorController {
     @GetMapping("/doctors/{id}/schedule")
     public String getDoctorSchedule(@PathVariable Long id, ModelMap map){
 
-        UserDetails ob = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if(util.checkUserId(id, ob)){
+        map.addAttribute("home", hmsUtil.checkRoleBasedHome(userDetails, id));
+
+        if(util.checkUserId(id, userDetails)){
 
         }else{
             return "forbidden";

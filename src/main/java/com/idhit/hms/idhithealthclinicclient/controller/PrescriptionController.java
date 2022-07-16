@@ -6,11 +6,16 @@ import com.idhit.hms.idhithealthclinicclient.entity.Appointment;
 import com.idhit.hms.idhithealthclinicclient.entity.Doctor;
 import com.idhit.hms.idhithealthclinicclient.entity.Prescription;
 import com.idhit.hms.idhithealthclinicclient.model.PrescriptionRequestPayload;
+import com.idhit.hms.idhithealthclinicclient.util.HMSUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -34,11 +39,19 @@ public class PrescriptionController {
     @Value("${server.base.url}")
     private String baseUrl;
 
+    @Autowired
+    HMSUtil hmsUtil;
+
     @GetMapping("/doctors/{docId}/appointments/{apptId}/prescriptions")
     //get all prescriptions of a doctor
     public String getPrescriptionsOfADoctor(@PathVariable Long docId,
                                             @PathVariable Long apptId,
                                             ModelMap map){
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        map.addAttribute("home", hmsUtil.checkRoleBasedHome(userDetails, docId));
+
         List<Prescription> prescriptions = restTemplate.getForObject(baseUrl + "/doctors/" + docId + "/appointments/" + apptId + "/prescriptions",
                 List.class);
         ObjectMapper mapper = new ObjectMapper();
@@ -60,6 +73,11 @@ public class PrescriptionController {
     public String prescriptionForm(@PathVariable Long docId,
                                    @PathVariable Long apptId,
                                    ModelMap map){
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        map.addAttribute("home", hmsUtil.checkRoleBasedHome(userDetails, docId));
+
         PrescriptionRequestPayload prescription = new PrescriptionRequestPayload();
         map.addAttribute("prescription", prescription);
         return "prescription-form";
@@ -71,6 +89,7 @@ public class PrescriptionController {
                                     PrescriptionRequestPayload prescriptionRequestPayload,
                                     BindingResult bindingResult,
                                     RedirectAttributes redirectAttributes){
+
         if(bindingResult.hasErrors()){
             return "prescription-form";
         }
@@ -85,6 +104,11 @@ public class PrescriptionController {
                                             @PathVariable Long apptId,
                                             @PathVariable Long presId,
                                             ModelMap map){
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        map.addAttribute("home", hmsUtil.checkRoleBasedHome(userDetails, docId));
+
         Prescription prescriptions = restTemplate.getForObject(baseUrl + "/doctors/" + docId + "/appointments/" + apptId + "/prescriptions/" + presId,
                 Prescription.class);
         //String medicines = String.join(",", prescriptions.getMedicines());
@@ -98,6 +122,11 @@ public class PrescriptionController {
 
     @GetMapping("/doctors/{docId}/prescriptions")
     public String getAllPrescriptions(@PathVariable Long docId, ModelMap map){
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        map.addAttribute("home", hmsUtil.checkRoleBasedHome(userDetails, docId));
+
         List<Prescription> prescriptions = restTemplate.getForObject(baseUrl + "/doctors/" + docId + "/prescriptions",
                 List.class);
         ObjectMapper mapper = new ObjectMapper();

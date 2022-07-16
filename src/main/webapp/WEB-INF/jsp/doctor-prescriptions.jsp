@@ -49,6 +49,10 @@
     </style>
 </head>
 <body>
+<div class="topnav">
+    <a href="${home}">Home</a>
+    <a href="/logout">Logout</a>
+</div>
 <table>
     <h1>${doctor}</h1>
     <tr>

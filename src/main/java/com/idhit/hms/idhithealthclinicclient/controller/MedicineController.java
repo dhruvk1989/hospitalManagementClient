@@ -6,11 +6,14 @@ import com.idhit.hms.idhithealthclinicclient.entity.Doctor;
 import com.idhit.hms.idhithealthclinicclient.entity.Medicine;
 import com.idhit.hms.idhithealthclinicclient.model.DoctorPayload;
 import com.idhit.hms.idhithealthclinicclient.model.MedicinePayload;
+import com.idhit.hms.idhithealthclinicclient.util.HMSUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -36,8 +39,16 @@ public class MedicineController {
     @Value("${server.base.url}")
     private String baseUrl;
 
+    @Autowired
+    HMSUtil hmsUtil;
+
     @GetMapping("/medicines")
     public String getMedicines(ModelMap map){
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        map.addAttribute("home", hmsUtil.checkRoleBasedHome(userDetails, null));
+
         List<Medicine> medicines = restTemplate.getForObject(baseUrl + "/medicines", List.class);
         ObjectMapper mapper = new ObjectMapper();
         medicines = mapper.convertValue(medicines, new TypeReference<List<Medicine>>() {});
@@ -58,6 +69,11 @@ public class MedicineController {
 
     @GetMapping("/medicines/register")
     public String createMedicine(ModelMap map){
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        map.addAttribute("home", hmsUtil.checkRoleBasedHome(userDetails, null));
+
         MedicinePayload medicine = new MedicinePayload();
         map.addAttribute("medicine", medicine);
         return "create-medicine";

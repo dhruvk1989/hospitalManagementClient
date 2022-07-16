@@ -65,13 +65,9 @@
     <title>Insert title here</title>
 </head>
 <body>
-
 <div class="topnav">
-    <a href="/idhita/home">Home</a>
-    <a href="/idhita/appointments/register">Appointments</a>
-    <a class="active" href="/idhita/doctors/register">Doctors</a>
-    <a href="/idhita/medicines">Medicines</a>
-    <a href="/idhita/about">About</a>
+    <a href="${home}">Home</a>
+    <a href="/logout">Logout</a>
 </div>
 
 <h1>Create a doctor record</h1>
