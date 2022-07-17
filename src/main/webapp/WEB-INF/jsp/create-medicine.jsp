@@ -70,7 +70,7 @@
     <a href="/logout">Logout</a>
 </div>
 
-<h1>Create a doctor record</h1>
+<h1>Create a medicine record</h1>
 <form:form method="POST" modelAttribute="medicine" commandName="medicine" action="/idhita/medicines/save">
     <div>
         <div>
