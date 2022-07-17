@@ -107,6 +107,21 @@ public class DoctorController {
         Doctor doctor = restTemplate.getForEntity(baseUrl + "/doctors/" + id, Doctor.class).getBody();
         UserDetails ob = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(util.checkUserId(id, ob)){
+            List<Schedule> schedules = restTemplate.getForObject(baseUrl + "/doctors/" + id + "/schedule", List.class);
+            ObjectMapper mapper = new ObjectMapper();
+            schedules = mapper.convertValue(schedules, new TypeReference<List<Schedule>>() {
+            });
+
+            ArrayList<String> links = new ArrayList<>();
+            for (Schedule s : schedules) {
+                if (s != null) {
+                    links.add("/idhita/doctors/" + id + "/appointments/" + s.getApptId());
+                } else {
+                    links.add("");
+                }
+            }
+            modelMap.addAttribute("links", links);
+            modelMap.addAttribute("schedule", schedules);
             modelMap.addAttribute("doctor", doctor);
             modelMap.addAttribute("link", "/idhita/doctors/" + id + "/schedule");
             return "single-doctor";
@@ -193,19 +208,25 @@ public class DoctorController {
         schedules = mapper.convertValue(schedules, new TypeReference<List<Schedule>>() {
         });
 
-        ArrayList<String> links = new ArrayList<>();
-        for (Schedule s : schedules) {
-            if(s != null){
-                links.add("/idhita/doctors/" + id + "/appointments/" + s.getApptId());
-            }else{
-                links.add("");
-            }
-        }
+        if(schedules.size() > 0) {
 
-        map.addAttribute("links", links);
-        map.addAttribute("schedule", schedules);
-        map.addAttribute("doctorName", schedules.get(0).getDocName());
-        return "doctor-schedule";
+            ArrayList<String> links = new ArrayList<>();
+            for (Schedule s : schedules) {
+                if (s != null) {
+                    links.add("/idhita/doctors/" + id + "/appointments/" + s.getApptId());
+                } else {
+                    links.add("");
+                }
+            }
+
+            map.addAttribute("links", links);
+            map.addAttribute("schedule", schedules);
+            map.addAttribute("doctorName", schedules.get(0).getDocName());
+            return "doctor-schedule";
+        }else{
+            map.addAttribute("error", "No Appointments found for this doctor");
+            return "error-page";
+        }
 
     }
 
